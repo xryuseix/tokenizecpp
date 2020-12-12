@@ -50,7 +50,7 @@ vector<string> tokenize(const string &str, vector<string> &token) {
     // break_stringにopとparenを追加
     set_union(begin(op), end(op), begin(paren), end(paren),
               inserter(break_string, end(break_string)));
-    for (int i = 0; i < str.size(); i++) {
+    for (int i = 0; i < (int)str.size(); i++) {
         if (str[i] == '\n' || remove_string.count(string(1, str[i]))) {
             // 改行,タブ,空白なので無視
             continue;
@@ -58,7 +58,7 @@ vector<string> tokenize(const string &str, vector<string> &token) {
             string tmp;
             int j = 0;
             int reserve_string = 0;
-            while (i + j < str.size()) {
+            while (i + j < (int)str.size()) {
                 if (remove_string.count(string(1, str[i + j]))) {
                     // 「str;」の;が次のもじのとき，strだけをtokenに入れる
                     break;
@@ -66,7 +66,7 @@ vector<string> tokenize(const string &str, vector<string> &token) {
                 bool string_break_flag = false;  // ここで切るかのフラグ
                 // tmpの次の3,2,1文字が予約語かチェック
                 for (int prog = 3; prog > 0; prog--) {
-                    if (i + j + prog - 1 >= str.size()) {
+                    if (i + j + prog - 1 >= (int)str.size()) {
                         continue;
                     }
                     if (break_string.count(str.substr(i + j, prog))) {
@@ -83,7 +83,7 @@ vector<string> tokenize(const string &str, vector<string> &token) {
                     break;
                 }
             }
-            if (tmp.size()) token.push_back(tmp);
+            if ((int)tmp.size()) token.push_back(tmp);
             if (reserve_string) {
                 // AAA++のとき，AAAはこの上の行で追加，++はここで追加
                 token.push_back(str.substr(i + j, reserve_string));
@@ -109,7 +109,7 @@ void add_label(const vector<string> &token, vector<string> &labeled_token) {
                                      {"OP", logical}};
 
     bool passed_typedef = false;
-    for (int i = 0; i < token.size(); i++) {
+    for (int i = 0; i < (int)token.size(); i++) {
         const string word = token[i];
         // 型を設定
         bool add_label = false;
@@ -143,7 +143,7 @@ void add_label(const vector<string> &token, vector<string> &labeled_token) {
             labeled_token.push_back("PAREN");
         } else if (word == ";" || word == ",") {  // 区切り文字
             labeled_token.push_back("PUNC");
-        } else if (i + 1 < token.size() && token[i + 1] == "(") {  // 関数
+        } else if (i + 1 < (int)token.size() && token[i + 1] == "(") {  // 関数
             labeled_token.push_back("FUNC");
         } else {
             labeled_token.push_back("VAR");  // 変数
@@ -162,7 +162,7 @@ string remove_comment(string s) {
     s = regex_replace(s, std, "");
     const regex crlf{"\r\n"};
     s = regex_replace(s, crlf, "\n");
-    for (int c = 0; c < s.size(); c++) {
+    for (int c = 0; c < (int)s.size(); c++) {
         if (!isprint(s[c]) && !iscntrl(s[c])) {
             s[c] = ' ';
         }

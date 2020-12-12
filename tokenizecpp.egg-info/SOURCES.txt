@@ -1,0 +1,11 @@
+LICENSE
+MANIFEST.in
+README.rst
+setup.py
+tokenize.cpp
+tokenizecpp.egg-info/PKG-INFO
+tokenizecpp.egg-info/SOURCES.txt
+tokenizecpp.egg-info/dependency_links.txt
+tokenizecpp.egg-info/not-zip-safe
+tokenizecpp.egg-info/requires.txt
+tokenizecpp.egg-info/top_level.txt
